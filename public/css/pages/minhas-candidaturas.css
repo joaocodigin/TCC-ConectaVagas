@@ -1,0 +1,53 @@
+/* ==========================================
+   PAINEL DO CANDIDATO (MINHAS CANDIDATURAS)
+========================================== */
+
+/* Link Ativo na Navegação (Pode ser reaproveitado em outros painéis) */
+.nav-link-active {
+  color: var(--color-primary) !important;
+  font-weight: 600;
+}
+
+/* Cabeçalho do Painel */
+.painel-header {
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 16px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.painel-header h2 {
+  color: var(--color-text);
+  font-weight: 800;
+  font-size: 1.8rem;
+}
+
+.painel-header p {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  margin-top: 4px;
+}
+
+/* Estado de Carregamento (Loading) */
+.painel-loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+}
+
+.painel-loading p {
+  color: var(--color-text-muted);
+}
+
+/* Animação suave para o cabeçalho do painel */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsividade do cabeçalho */
+@media (max-width: 600px) {
+  .painel-header h2 {
+    font-size: 1.5rem;
+  }
+}

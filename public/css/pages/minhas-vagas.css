@@ -1,0 +1,73 @@
+/* ==========================================
+   PAINEL DA EMPRESA (MINHAS VAGAS)
+========================================== */
+
+/* Link Ativo na Navegação */
+.nav-link-active {
+  color: var(--color-primary) !important;
+  font-weight: 600;
+}
+
+/* Cabeçalho do Painel da Empresa */
+.painel-empresa-header {
+  margin-bottom: 32px;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 16px;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.painel-empresa-titulo h2 {
+  color: var(--color-text);
+  font-weight: 800;
+  font-size: 1.8rem;
+}
+
+.painel-empresa-titulo p {
+  color: var(--color-text-muted);
+  font-size: 1rem;
+  margin-top: 4px;
+}
+
+/* Container da Lista de Vagas da Empresa (Stack vertical) */
+.lista-minhas-vagas-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Estado de Carregamento */
+.painel-loading {
+  text-align: center;
+  padding: 40px;
+}
+
+.painel-loading p {
+  color: var(--color-text-muted);
+}
+
+/* Animação suave de entrada */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsividade do cabeçalho */
+@media (max-width: 600px) {
+  .painel-empresa-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .painel-empresa-acoes {
+    width: 100%;
+  }
+  
+  .painel-empresa-acoes .btn-principal {
+    width: 100%; /* Botão ocupa a largura toda no celular */
+  }
+}

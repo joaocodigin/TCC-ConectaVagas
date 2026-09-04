@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vagas Disponíveis - Conecta Vagas</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <header>
+    <div class="logo">
+      <h1>Conecta Vagas</h1>
+    </div>
+ 
+
+    <!-- CONTRATO JS: IDs preservados -->
+    <div class="acoes" id="nav-usuario">
+      <a href="/login.html" id="link-login">Login</a>
+      <a href="/cadastro.html" id="link-cadastro" class="btn-principal">Cadastrar-se</a>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main>
+    <!-- APRESENTAÇÃO PRINCIPAL (HERO) -->
+    <section class="hero">
+      <div>
+        <h2>Encontre oportunidades,<br>conecte talentos.</h2>
+        <p>O Conecta Vagas aproxima candidatos e empresas, facilitando a busca por empregos e novas oportunidades profissionais.</p>
+      </div>
+    </section>
+
+    <!-- VAGAS EM DESTAQUE -->
+    <section class="vagas-destaque">
+      <h2>Vagas em Destaque</h2>
+      
+      <!-- CONTRATO JS: ID lista-vagas preservado -->
+      <div id="lista-vagas" class="lista-vagas">
+        
+        <!-- Estado vazio/loading inicial refatorado -->
+        <div class="card vagas-loading">
+          <p class="texto-secundario">Carregando vagas...</p>
+        </div>
+        
+      </div>
+    </section>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p>© 2026 Conecta Vagas. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- MODAL DE LOGOUT -->
+  <!-- CONTRATO JS: IDs de modal e botões preservados -->
+  <!-- O style="display: none;" é aceitável aqui pois é a âncora visual inicial que o JS irá sobreescrever -->
+  <div id="modal-logout" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <h3>Confirmar Saída</h3>
+      <p>Deseja realmente encerrar sua sessão e sair da conta?</p>
+      <div class="modal-actions">
+        <button type="button" id="btn-cancelar-logout" class="btn-secundario">Cancelar</button>
+        <button type="button" id="btn-confirmar-logout" class="btn-perigo">Sim, Sair</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT -->
+  <script type="module" src="./js/pages/index.js"></script>
+  <script type="module" src="./js/animations/vagas-carousel.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detalhes da Vaga - Conecta Vagas</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <header>
+    <div class="logo">
+      <h1>Conecta Vagas</h1>
+    </div>
+   
+    <!-- CONTRATO JS: ID nav-usuario e link-login preservados -->
+    <div class="acoes" id="nav-usuario">
+      <a href="/login.html" id="link-login" class="btn-secundario">Login</a>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="container vaga-detalhes-main">
+    
+    <!-- Link de navegação auxiliar (Breadcrumb) -->
+    <div class="breadcrumb">
+      <a href="/">&larr; Voltar para vagas</a>
+    </div>
+
+    <!-- CONTRATO JS: IDs de mensagem preservados -->
+    <div id="mensagem-erro" class="alert alert-danger" style="display: none;"></div>
+    <div id="mensagem-sucesso" class="alert alert-success" style="display: none;"></div>
+
+    <!-- CONTRATO JS: ID conteudo-vaga preservado -->
+    <div id="conteudo-vaga" class="card vaga-detalhes-card">
+      
+      <!-- Estado vazio/loading inicial -->
+      <div class="vaga-detalhes-loading">
+        <p>Carregando detalhes da vaga...</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p>© 2026 Conecta Vagas. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script type="module" src="/js/pages/vaga-detalhes.js"></script>
+</body>
+</html>

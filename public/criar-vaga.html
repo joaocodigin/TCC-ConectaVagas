@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anunciar Vaga - Conecta Vagas</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <header>
+    <div class="logo">
+      <h1>Conecta Vagas</h1>
+    </div>
+    
+    <nav>
+      <a href="/">Vagas</a>
+    </nav>
+
+    <!-- CONTRATO JS: ID nav-usuario preservado -->
+    <div class="acoes" id="nav-usuario">
+      <!-- O JS preenche esta área com as opções do usuário logado -->
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="container criar-vaga-main">
+    
+    <div class="card criar-vaga-card">
+      <h2>Cadastrar Nova Vaga</h2>
+      <p class="criar-vaga-subtitle">Preencha os dados abaixo para anunciar uma oportunidade da sua empresa para milhares de candidatos.</p>
+
+      <!-- CONTRATO JS: IDs de mensagem preservados -->
+      <div id="mensagem-erro" class="alert alert-danger" style="display: none;"></div>
+      <div id="mensagem-sucesso" class="alert alert-success" style="display: none;"></div>
+
+      <!-- CONTRATO JS: ID form-criar-vaga preservado -->
+      <form id="form-criar-vaga">
+        
+        <div class="form-group">
+          <label for="titulo">Título da Vaga</label>
+          <!-- CONTRATO JS: ID titulo preservado -->
+          <input type="text" id="titulo" placeholder="Ex: Desenvolvedor Node.js Sênior" required>
+        </div>
+
+        <!-- Layout Grid via CSS -->
+        <div class="criar-vaga-grid">
+          
+          <div class="form-group">
+            <label for="categoria-id">Categoria</label>
+            <!-- CONTRATO JS: ID categoria-id preservado -->
+            <select id="categoria-id" required>
+              <option value="" disabled selected>Selecione uma categoria...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="cidade-id">Cidade</label>
+            <!-- CONTRATO JS: ID cidade-id preservado -->
+            <select id="cidade-id" required>
+              <option value="" disabled selected>Selecione uma cidade...</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="salario">Salário (R$) - Opcional</label>
+            <!-- CONTRATO JS: ID salario preservado -->
+            <input type="number" step="0.01" id="salario" placeholder="Ex: 5000.00">
+          </div>
+
+        </div>
+
+        <div class="form-group">
+          <label for="requisitos">Requisitos</label>
+          <!-- CONTRATO JS: ID requisitos preservado -->
+          <textarea id="requisitos" rows="3" placeholder="Ex: Experiência com Node.js, Banco de dados e Integração de APIs..." required></textarea>
+        </div>
+
+        <div class="form-group">
+          <label for="descricao">Descrição da Vaga</label>
+          <!-- CONTRATO JS: ID descricao preservado -->
+          <textarea id="descricao" rows="5" placeholder="Descreva as principais responsabilidades, benefícios e ambiente de trabalho da oportunidade..." required></textarea>
+        </div>
+
+        <!-- Botão alinhado -->
+        <div class="criar-vaga-actions">
+          <button type="submit" class="btn-principal">Publicar Vaga</button>
+        </div>
+        
+      </form>
+    </div>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p>© 2026 Conecta Vagas. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script type="module" src="/js/pages/criar-vaga.js"></script>
+</body>
+</html>

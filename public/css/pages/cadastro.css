@@ -1,0 +1,88 @@
+/* ==========================================
+   PÁGINA DE CADASTRO
+========================================== */
+
+/* Container Principal */
+.cadastro-main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 75vh;
+  animation: slideUpFade 0.5s ease-out forwards;
+}
+
+/* Card de Cadastro Específico */
+.cadastro-card {
+  width: 100%;
+  max-width: 550px;
+  padding: 40px 32px;
+  border-top: 4px solid var(--color-primary);
+  box-shadow: var(--shadow-md);
+  background-color: var(--color-bg-surface);
+}
+
+.cadastro-card h2 {
+  text-align: center;
+  margin-bottom: 24px;
+  color: var(--color-text);
+  font-weight: 800;
+}
+
+/* Grid para campos lado a lado (Senhas) */
+.cadastro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.cadastro-grid .form-group {
+  margin-bottom: 0;
+}
+
+/* Ajustes de espaçamento do Botão */
+.cadastro-btn {
+  width: 100%;
+  margin-top: 24px;
+}
+
+/* Link Auxiliar (Voltar para Login) */
+.cadastro-link-auxiliar {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+}
+
+.cadastro-link-auxiliar a {
+  color: var(--color-primary);
+  font-weight: 600;
+  transition: var(--transition-fast);
+}
+
+.cadastro-link-auxiliar a:hover {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+/* Animação de Entrada Suave */
+@keyframes slideUpFade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsividade: Telas menores que 600px */
+@media (max-width: 600px) {
+  .cadastro-grid {
+    grid-template-columns: 1fr; /* Empilha os campos de senha no celular */
+  }
+  
+  .cadastro-card {
+    padding: 24px 16px; /* Reduz o padding interno para ganhar espaço na tela */
+  }
+}

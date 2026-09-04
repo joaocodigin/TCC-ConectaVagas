@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Explorar Vagas - Conecta Vagas</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <header>
+    <div class="logo"><h1>Conecta Vagas</h1></div>
+    <nav>
+      <a href="/" class="nav-link-active">Vagas</a>
+    </nav>
+    <div class="acoes" id="nav-usuario">
+      <a href="/login.html" id="link-login">Login</a>
+      <a href="/cadastro.html" id="link-cadastro" class="btn-principal">Cadastrar-se</a>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="container">
+    
+    <div style="margin-bottom: 16px;">
+      <h2>Explorar Oportunidades</h2>
+      <p class="texto-mutado">Use os filtros abaixo para encontrar a vaga ideal para você.</p>
+    </div>
+
+    <div class="vagas-layout">
+      <!-- BARRA LATERAL (Filtros Avançados) -->
+      <aside class="vagas-sidebar">
+        <h3>Filtros</h3>
+        
+        <div class="form-group">
+          <label for="filtro-busca">Palavra-chave</label>
+          <input type="text" id="filtro-busca" placeholder="Ex: Desenvolvedor, Vendas...">
+        </div>
+
+        <div class="form-group">
+          <label for="filtro-empresa">Empresa</label>
+          <input type="text" id="filtro-empresa" placeholder="Nome da empresa">
+        </div>
+
+        <div class="form-group">
+          <label for="filtro-salario">Salário Mínimo (R$)</label>
+          <input type="number" id="filtro-salario" placeholder="Ex: 3000">
+        </div>
+
+        <div class="form-group">
+          <label for="filtro-categoria">Categoria</label>
+          <select id="filtro-categoria">
+            <option value="">Todas as categorias</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="filtro-cidade">Cidade</label>
+          <select id="filtro-cidade">
+            <option value="">Todas as cidades</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="filtro-tipo">Tipo de Trabalho</label>
+          <select id="filtro-tipo">
+            <option value="">Qualquer tipo</option>
+            <option value="presencial">Presencial</option>
+            <option value="remoto">Remoto</option>
+            <option value="hibrido">Híbrido</option>
+          </select>
+        </div>
+
+        <button id="btn-limpar-filtros" class="btn-secundario" style="width: 100%;">Limpar Filtros</button>
+      </aside>
+
+      <!-- CONTEÚDO (Lista de Vagas e Paginação) -->
+      <div class="vagas-content">
+        <div id="lista-vagas" class="lista-vagas">
+          <p class="texto-mutado">Carregando vagas...</p>
+        </div>
+        <div id="container-paginacao"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p>© 2026 Conecta Vagas. Todos os direitos reservados.</p>
+  </footer>
+
+  <script type="module" src="./js/pages/vagas.js"></script>
+</body>
+</html>

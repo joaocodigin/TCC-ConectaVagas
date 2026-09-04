@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Criar Conta - Conecta Vagas</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <header>
+    <div class="logo">
+      <h1>Conecta Vagas</h1>
+    </div>
+    
+    <nav>
+      <a href="/">Vagas</a>
+    </nav>
+
+    <div class="acoes">
+      <a href="/login.html" class="btn-secundario">Login</a>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="container" style="display: flex; justify-content: center; align-items: flex-start; min-height: 75vh;">
+    
+    <div class="card" style="width: 100%; max-width: 650px; padding: 40px 32px;">
+      <h2 style="text-align: center; margin-bottom: 8px; color: var(--text-primary); font-weight: 800;">Criar Nova Conta</h2>
+      <p style="text-align: center; color: var(--text-secondary); margin-bottom: 24px; font-size: 0.95rem;">Junte-se ao Conecta Vagas para anunciar ou encontrar as melhores oportunidades.</p>
+
+      <!-- CONTRATO JS: IDs de mensagem preservados -->
+      <div id="mensagem-erro" class="alert alert-danger" style="display: none;"></div>
+      <div id="mensagem-sucesso" class="alert alert-success" style="display: none;"></div>
+
+      <!-- CONTRATO JS: ID tipo-conta preservado -->
+      <!-- A estrutura original fora do form foi mantida para segurança lógica, mas com destaque visual -->
+      <div class="form-group" style="background: var(--primary-light); padding: 20px; border-radius: var(--border-radius-sm); border: 1px solid rgba(37, 99, 235, 0.2); margin-bottom: 32px;">
+        <label for="tipo-conta" style="margin-bottom: 12px; color: var(--primary); font-weight: 700;">Eu quero me cadastrar como:</label>
+        <select id="tipo-conta" style="border-color: var(--primary); font-weight: 600;">
+          <option value="candidato">Candidato (Buscando vagas)</option>
+          <option value="empresa">Empresa (Anunciando vagas)</option>
+        </select>
+      </div>
+
+      <!-- CONTRATO JS: ID form-registro preservado -->
+      <form id="form-registro">
+        
+        <div class="form-group">
+          <label for="nome">Nome Completo do Responsável</label>
+          <!-- CONTRATO JS: ID nome preservado -->
+          <input type="text" id="nome" placeholder="Digite o seu nome completo" required>
+        </div>
+
+        <!-- Layout Grid para Email e Senha ficarem lado a lado -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="email">E-mail</label>
+            <!-- CONTRATO JS: ID email preservado -->
+            <input type="email" id="email" placeholder="seuemail@exemplo.com" required>
+          </div>
+
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="senha">Senha</label>
+            <!-- CONTRATO JS: ID senha preservado -->
+            <input type="password" id="senha" placeholder="Mínimo de 6 caracteres" required>
+          </div>
+        </div>
+
+        <!-- CONTRATO JS: ID campos-empresa e display: none inicial preservados -->
+        <!-- Bloco dinâmico da Empresa estilizado com uma separação sutil -->
+        <div id="campos-empresa" style="display: none; margin-top: 24px; padding-top: 24px; border-top: 1px dashed var(--border-color);">
+          <h3 style="font-size: 1.1rem; color: var(--text-primary); margin-bottom: 16px;">Dados da Empresa</h3>
+          
+          <div class="form-group">
+            <label for="razao-social">Razão Social</label>
+            <!-- CONTRATO JS: ID razao-social preservado -->
+            <input type="text" id="razao-social" placeholder="Razão Social da Empresa LTDA">
+          </div>
+
+          <!-- Layout Grid para Nome Fantasia e CNPJ -->
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="nome-fantasia">Nome Fantasia</label>
+              <!-- CONTRATO JS: ID nome-fantasia preservado -->
+              <input type="text" id="nome-fantasia" placeholder="Nome Fantasia">
+            </div>
+
+            <div class="form-group" style="margin-bottom: 0;">
+              <label for="cnpj">CNPJ</label>
+              <!-- CONTRATO JS: ID cnpj preservado -->
+              <input type="text" id="cnpj" placeholder="00.000.000/0000-00">
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-principal" style="width: 100%; margin-top: 32px;">Concluir Cadastro</button>
+        
+      </form>
+
+      <!-- Link auxiliar visual -->
+      <div style="text-align: center; margin-top: 24px; font-size: 0.95rem; color: var(--text-secondary);">
+        Já possui uma conta? <a href="/login.html" style="color: var(--primary); font-weight: 600;">Faça login aqui</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p>© 2026 Conecta Vagas. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script type="module" src="/js/pages/registro.js"></script>
+</body>
+</html>

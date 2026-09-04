@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minhas Vagas - Conecta Vagas</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <header>
+    <div class="logo">
+      <h1>Conecta Vagas</h1>
+    </div>
+    
+    <nav>
+      <a href="/">Vagas</a>
+      <a href="/criar-vaga.html">Criar Vaga</a>
+      <!-- Link ativo destacado visualmente -->
+      <a href="/minhas-vagas.html" style="color: var(--primary); font-weight: 600;">Minhas Vagas</a>
+    </nav>
+
+    <!-- CONTRATO JS: ID nav-usuario preservado -->
+    <div class="acoes" id="nav-usuario">
+      <!-- CONTRATO JS: ID btn-logout preservado -->
+      <a href="#" id="btn-logout" class="btn-perigo">Sair</a>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="container">
+    
+    <!-- Cabeçalho da página do painel -->
+    <div style="margin-bottom: 32px; border-bottom: 1px solid var(--border-color); padding-bottom: 24px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px;">
+      <div>
+        <h2 style="color: var(--text-primary); font-weight: 800; font-size: 1.8rem;">Gerenciamento de Vagas</h2>
+        <p style="color: var(--text-secondary); font-size: 1rem; margin-top: 4px;">Painel da Empresa - Acompanhe suas vagas publicadas e gerencie as candidaturas.</p>
+      </div>
+      <div>
+        <!-- Botão auxiliar de atalho para melhorar a UX -->
+        <a href="/criar-vaga.html" class="btn-principal">Anunciar Nova Vaga</a>
+      </div>
+    </div>
+
+    <!-- CONTRATO JS: IDs de mensagem preservados -->
+    <div id="mensagem-erro" class="alert alert-danger" style="display: none;"></div>
+    <div id="mensagem-sucesso" class="alert alert-success" style="display: none;"></div>
+
+    <!-- CONTRATO JS: ID lista-minhas-vagas preservado -->
+    <!-- Utilizando display flex column para que os cards (e os candidatos dentro deles) cresçam para baixo harmoniosamente -->
+    <div id="lista-minhas-vagas" style="display: flex; flex-direction: column; gap: 8px;">
+      
+      <!-- Estado vazio/loading inicial -->
+      <div class="card" style="text-align: center; padding: 40px;">
+        <p style="color: var(--text-secondary);">Carregando suas vagas...</p>
+      </div>
+
+    </div>
+    
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p>© 2026 Conecta Vagas. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script type="module" src="/js/pages/minhas-vagas.js"></script>
+</body>
+</html>

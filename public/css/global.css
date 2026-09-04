@@ -1,0 +1,200 @@
+:root {
+  /* Cores Principais */
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-light: #eff6ff;
+  --color-secondary: #0f172a;
+  
+  /* Cores de Feedback */
+  --color-danger: #ef4444;
+  --color-danger-hover: #dc2626;
+  --color-danger-light: #fee2e2;
+  --color-success: #10b981;
+  --color-success-hover: #059669;
+  --color-success-light: #dcfce7;
+  --color-warning: #f59e0b;
+  --color-warning-light: #fef3c7;
+
+  /* Fundos e Textos */
+  --color-bg-main: #f8fafc;
+  --color-bg-surface: #ffffff;
+  --color-text: #0f172a;
+  --color-text-muted: #64748b;
+
+  /* Espaçamentos */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 24px;
+  --space-lg: 32px;
+  --space-xl: 48px;
+
+  /* Bordas e Sombras */
+  --color-border: #e2e8f0;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07);
+  --shadow-lg: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+
+  /* Transições */
+  --transition-fast: 0.15s ease-in-out;
+  --transition-normal: 0.25s ease-in-out;
+}
+
+/* ==========================================
+   RESET & BASE
+========================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--color-bg-main);
+  color: var(--color-text);
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition-normal);
+}
+
+.container {
+  max-width: 1000px;
+  width: 90%;
+  margin: var(--space-xl) auto;
+  flex-grow: 1;
+}
+
+/* ==========================================
+   HEADER & FOOTER (Glassmorphism Suave)
+========================================== */
+header {
+  width: 100%;
+  height: 80px;
+  background: rgba(255, 255, 255, 0.90);
+  backdrop-filter: blur(12px); /* Efeito Glassmorphism sutil */
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8%;
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo h1 {
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+nav { display: flex; gap: var(--space-md); }
+nav a {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+nav a:hover { color: var(--color-primary); }
+
+.acoes { display: flex; gap: var(--space-sm); align-items: center; }
+
+footer {
+  background: var(--color-secondary);
+  color: var(--color-text-muted);
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  margin-top: auto;
+  font-size: 0.9rem;
+}
+
+/* ==========================================
+   BOTÕES GERAIS
+========================================== */
+button, .btn-principal, .btn-secundario, .btn-perigo, .btn-sucesso {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px var(--space-md);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: none;
+  transition: var(--transition-fast);
+}
+
+button, .btn-principal {
+  background-color: var(--color-primary);
+  color: #ffffff;
+}
+button:hover, .btn-principal:hover {
+  background-color: var(--color-primary-hover);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+  transform: translateY(-1px);
+}
+
+.btn-secundario {
+  background-color: var(--color-bg-main);
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+}
+.btn-secundario:hover { background-color: var(--color-border); color: var(--color-text); }
+
+.btn-perigo { background-color: var(--color-danger); color: white; }
+.btn-perigo:hover { background-color: var(--color-danger-hover); }
+
+.btn-sucesso { background-color: var(--color-success); color: white; }
+.btn-sucesso:hover { background-color: var(--color-success-hover); }
+
+/* ==========================================
+   FORMULÁRIOS & ALERTAS
+========================================== */
+.form-group { margin-bottom: var(--space-sm); }
+.form-group label {
+  display: block; margin-bottom: 6px; font-weight: 600; font-size: 0.9rem;
+}
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 14px 16px; border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-sm); font-size: 0.95rem; background-color: var(--color-bg-surface);
+  outline: none; transition: var(--transition-fast);
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+  border-color: var(--color-primary); box-shadow: 0 0 0 4px var(--color-primary-light);
+}
+
+.alert {
+  padding: var(--space-sm); border-radius: var(--radius-sm); margin-bottom: var(--space-md);
+  font-weight: 500; font-size: 0.95rem;
+}
+.alert-danger { background-color: var(--color-danger-light); color: var(--color-danger); }
+.alert-success { background-color: var(--color-success-light); color: var(--color-success-hover); }
+
+/* ==========================================
+   MODAIS
+========================================== */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  background-color: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px);
+  display: flex; justify-content: center; align-items: center; z-index: 1000;
+}
+.modal-content {
+  background-color: var(--color-bg-surface); padding: var(--space-lg);
+  border-radius: var(--radius-md); max-width: 450px; width: 90%;
+  box-shadow: var(--shadow-lg); border: 1px solid var(--color-border);
+}
+.modal-content h3 { margin-bottom: var(--space-xs); font-size: 1.4rem; }
+.modal-content p { color: var(--color-text-muted); margin-bottom: var(--space-md); }
+.modal-actions { display: flex; justify-content: flex-end; gap: var(--space-xs); }

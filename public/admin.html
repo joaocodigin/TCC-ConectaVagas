@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Administrativo - Conecta Vagas</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <header>
+    <div class="logo">
+      <h1>Conecta Vagas</h1>
+    </div>
+    
+    <nav>
+      <a href="/">Vagas</a>
+      <a href="/admin.html" class="nav-link-active">Painel Admin</a>
+    </nav>
+
+    <!-- CONTRATO JS: ID nav-usuario e btn-logout preservados -->
+    <div class="acoes" id="nav-usuario">
+      <a href="#" id="btn-logout" class="btn-perigo">Sair</a>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="container">
+    
+    <div class="admin-header">
+      <h2>Painel de Administração</h2>
+    </div>
+
+    <!-- CONTRATO JS: IDs de mensagem preservados -->
+    <div id="mensagem-erro" class="alert alert-danger" style="display: none;"></div>
+    <div id="mensagem-sucesso" class="alert alert-success" style="display: none;"></div>
+
+    <!-- Seção de Gestão de Usuários -->
+    <section class="card admin-secao">
+      <div class="admin-toolbar">
+        <h3>Gestão de Usuários</h3>
+        <div class="form-group admin-search-group">
+          <!-- Preparado visualmente para CPF/CNPJ -->
+          <input type="text" id="input-busca-usuario" placeholder="Nome, email, CPF, CNPJ ou ID...">
+        </div>
+      </div>
+      
+      <div id="container-usuarios">
+        <p class="texto-mutado">Carregando usuários...</p>
+      </div>
+    </section>
+
+    <!-- Seção de Gestão de Categorias -->
+    <section class="card admin-secao">
+      <div class="admin-toolbar">
+        <h3>Categorias</h3>
+        <div class="form-group admin-search-group">
+          <input type="text" id="input-busca-categoria" placeholder="Pesquisar categoria...">
+        </div>
+      </div>
+      
+      <form id="form-criar-categoria" class="admin-form-inline">
+        <div class="form-group admin-flex-1">
+          <label for="categoria-nome">Nova Categoria</label>
+          <input type="text" id="categoria-nome" placeholder="Ex: Tecnologia, Saúde, Educação" required>
+        </div>
+        <button type="submit" class="btn-principal">Adicionar</button>
+      </form>
+
+      <ul id="lista-categorias" class="admin-lista">
+        <li>Carregando...</li>
+      </ul>
+    </section>
+
+    <!-- Seção de Gestão de Cidades -->
+    <section class="card admin-secao">
+      <div class="admin-toolbar">
+        <h3>Cidades</h3>
+        <div class="form-group admin-search-group">
+          <input type="text" id="input-busca-cidade" placeholder="Pesquisar cidade ou UF...">
+        </div>
+      </div>
+      
+      <form id="form-criar-cidade" class="admin-form-inline">
+        <div class="form-group admin-flex-2">
+          <label for="cidade-nome">Nova Cidade</label>
+          <input type="text" id="cidade-nome" placeholder="Ex: São Paulo" required>
+        </div>
+        <div class="form-group admin-flex-1">
+          <label for="cidade-uf">UF</label>
+          <input type="text" id="cidade-uf" placeholder="Ex: SP" maxlength="2" required>
+        </div>
+        <button type="submit" class="btn-principal">Adicionar</button>
+      </form>
+
+      <ul id="lista-cidades" class="admin-lista">
+        <li>Carregando...</li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- RODAPÉ -->
+  <footer>
+    <p>© 2026 Conecta Vagas. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script type="module" src="/js/pages/admin.js"></script>
+</body>
+</html>

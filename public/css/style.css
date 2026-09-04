@@ -1,0 +1,21 @@
+/* ==========================================
+   CONECTA VAGAS - ESTILO PRINCIPAL
+========================================== */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* 1. Global (Variáveis, Reset, Estrutura Base, UI Elements) */
+@import url('./global.css');
+
+/* 2. Componentes (Reutilizáveis) */
+@import url('./components/vaga-card.css');
+
+/* 3. Páginas Específicas */
+@import url('./pages/index.css');
+@import url('./pages/cadastro.css');
+@import url('./pages/login.css');
+@import url('./pages/criar-vaga.css');
+@import url('./pages/minhas-candidaturas.css');
+@import url('./pages/minhas-vagas.css');
+@import url('./pages/vaga-detalhes.css');
+@import url('./pages/admin.css');
+@import url('./pages/vagas.css');

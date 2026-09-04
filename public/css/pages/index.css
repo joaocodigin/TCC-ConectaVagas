@@ -1,0 +1,90 @@
+/* ==========================================
+   PÁGINA INICIAL (HOME)
+========================================== */
+
+/* Seção Hero (Apresentação) */
+.hero {
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  padding: 0 10%;
+  background: linear-gradient(135deg, #1e3a8a 0%, var(--color-primary) 50%, #3b82f6 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  margin: var(--space-md) auto;
+  max-width: 1200px;
+  width: 95%;
+}
+
+/* Círculo decorativo ao fundo */
+.hero::after {
+  content: '';
+  position: absolute;
+  top: -50%; right: -15%;
+  width: 500px; height: 500px;
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.hero div {
+  max-width: 600px;
+  z-index: 1;
+}
+
+.hero h2 {
+  font-size: 2.8rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: var(--space-sm);
+  letter-spacing: -1px;
+}
+
+.hero p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+  margin-bottom: var(--space-lg);
+}
+
+/* Seção de Vagas em Destaque */
+.vagas-destaque {
+  margin-top: var(--space-xl);
+  margin-bottom: var(--space-xl);
+  width: 95%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.vagas-destaque h2 {
+  font-size: 1.8rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+  font-weight: 800;
+}
+
+/* Card de Carregamento (Substitui o style inline) */
+.vagas-loading {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px;
+}
+.vagas-destaque h2 {
+  font-size: 1.8rem;
+  color: var(--color-text);
+  margin-bottom: var(--space-md);
+  font-weight: 800;
+  text-align: center; /* Adicione esta linha aqui! */
+}
+/* Responsividade Básica da Home */
+@media (max-width: 768px) {
+  .hero {
+    padding: var(--space-lg) 5%;
+    min-height: 300px;
+  }
+  .hero h2 {
+    font-size: 2rem;
+  }
+}

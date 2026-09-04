@@ -1,0 +1,61 @@
+/* ==========================================
+   PÁGINA: DETALHES DA VAGA
+========================================== */
+
+/* 
+  Container restrito para otimizar a leitura.
+  Linhas muito largas (mais de 800px) cansam os olhos do usuário.
+*/
+.vaga-detalhes-main {
+  max-width: 800px;
+  min-height: 75vh;
+  animation: slideUpFade 0.5s ease-out forwards;
+}
+
+/* Breadcrumb (Link de Voltar) */
+.breadcrumb {
+  margin-bottom: 24px;
+}
+
+.breadcrumb a {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  transition: var(--transition-fast);
+}
+
+.breadcrumb a:hover {
+  color: var(--color-primary);
+  transform: translateX(-4px); /* Microinteração visual indicando retorno */
+}
+
+/* Card Principal de Conteúdo */
+.vaga-detalhes-card {
+  padding: 40px;
+  border-top: 4px solid var(--color-primary);
+}
+
+/* Estado de Carregamento */
+.vaga-detalhes-loading {
+  text-align: center;
+  padding: 20px 0;
+}
+
+.vaga-detalhes-loading p {
+  color: var(--color-text-muted);
+}
+
+/* Animação suave */
+@keyframes slideUpFade {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsividade: Telas menores que 600px */
+@media (max-width: 600px) {
+  .vaga-detalhes-card {
+    padding: 24px 16px;
+  }
+}
