@@ -5,11 +5,15 @@ static async listar(apenasAtivas = true, termo = "", page = 1, limit = 15) {
     const result = apenasAtivas 
       ? await CategoriaRepository.listarAtivas(termo, page, limit)
       : await CategoriaRepository.listarTodas(termo, page, limit);
+
+    const lista = Array.isArray(result) ? result : (result?.categorias || result?.itens || []);
+    const total = result?.total !== undefined ? result.total : lista.length;
+
     return {
-      itens: result.categorias,
-      total: result.total,
+      itens: lista,
+      total: total,
       paginaAtual: page,
-      totalPaginas: Math.ceil(result.total / limit)
+      totalPaginas: Math.ceil(total / limit) || 1
     };
   }
 

@@ -30,8 +30,20 @@ let estado = {
 let timeoutFiltro = null;
 let perfilUsuario = null;
 
+// Extrator seguro para evitar erros de iteracao
+function extrairArray(resposta) {
+  if (!resposta) return [];
+  if (Array.isArray(resposta)) return resposta;
+  if (Array.isArray(resposta.data)) return resposta.data;
+  if (Array.isArray(resposta.data?.itens)) return resposta.data.itens;
+  if (Array.isArray(resposta.data?.categorias)) return resposta.data.categorias;
+  if (Array.isArray(resposta.data?.cidades)) return resposta.data.cidades;
+  if (Array.isArray(resposta.itens)) return resposta.itens;
+  return [];
+}
+
 // ==========================================
-// INICIALIZAÇÃO
+// INICIALIZACAO
 // ==========================================
 async function inicializar() {
   await carregarSessao();
@@ -46,7 +58,7 @@ async function carregarSessao() {
     if (res.success && res.data) {
       perfilUsuario = res.data.usuario || res.data;
       navUsuario.innerHTML = `
-        <span class="texto-mutado" style="margin-right:12px;">Olá, ${perfilUsuario.nome.split(" ")[0]}</span>
+        <span class="texto-mutado" style="margin-right: 12px;">Ola, ${perfilUsuario.nome.split(" ")[0]}</span>
         <a href="${perfilUsuario.role === 'admin' ? '/admin.html' : '/painel.html'}" class="btn-secundario">Painel</a>
         <a href="#" id="btn-logout-vagas" class="btn-perigo">Sair</a>
       `;
@@ -56,58 +68,72 @@ async function carregarSessao() {
         window.location.reload();
       });
     }
-  } catch (error) { /* Permanece deslogado */ }
+  } catch (error) {
+    // Usuario deslogado, mantem botoes padrao
+  }
 }
 
 // ==========================================
-// CARREGAMENTO DE DADOS (FILTROS E VAGAS)
+// CARREGAMENTO DE DADOS (SELECTS E VAGAS)
 // ==========================================
 async function carregarCategorias() {
   try {
     const res = await listarCategorias();
-    // A API nova retorna os itens dentro de data.itens (devido à paginação)
-    const categorias = res.data?.itens || res.data || [];
+    const categorias = extrairArray(res);
+
+    if (!selectCategoria) return;
+
+    selectCategoria.innerHTML = '<option value="">Todas as categorias</option>';
     categorias.forEach(c => {
-      selectCategoria.insertAdjacentHTML('beforeend', `<option value="${c.id}">${c.nome}</option>`);
+      selectCategoria.insertAdjacentHTML("beforeend", `<option value="${c.id}">${c.nome}</option>`);
     });
-  } catch (error) { console.error("Erro categorias:", error); }
+  } catch (error) {
+    console.error("Erro ao carregar categorias:", error);
+  }
 }
 
 async function carregarCidades() {
   try {
     const res = await listarCidades();
-    const cidades = res.data?.itens || res.data || [];
+    const cidades = extrairArray(res);
+
+    if (!selectCidade) return;
+
+    selectCidade.innerHTML = '<option value="">Todas as cidades</option>';
     cidades.forEach(c => {
-      selectCidade.insertAdjacentHTML('beforeend', `<option value="${c.id}">${c.nome} - ${c.uf}</option>`);
+      selectCidade.insertAdjacentHTML("beforeend", `<option value="${c.id}">${c.nome} - ${c.uf}</option>`);
     });
-  } catch (error) { console.error("Erro cidades:", error); }
+  } catch (error) {
+    console.error("Erro ao carregar cidades:", error);
+  }
 }
 
 async function carregarVagas() {
   try {
-    listaVagas.innerHTML = `<p class="texto-mutado">Buscando oportunidades...</p>`;
+    listaVagas.innerHTML = `<p class="texto-mutado" style="text-align: center;">Buscando oportunidades...</p>`;
     const res = await buscarVagas(estado);
-    
-    if (!res.success || !res.data || !res.data.itens || res.data.itens.length === 0) {
+    const itens = extrairArray(res);
+
+    if (!res?.success || itens.length === 0) {
       listaVagas.innerHTML = `
-        <div class="card" style="text-align:center; padding: 40px;">
+        <div class="card" style="text-align: center; padding: 40px; width: 100%;">
           <p class="texto-mutado">Nenhuma vaga encontrada com estes filtros.</p>
         </div>`;
       containerPaginacao.innerHTML = "";
       return;
     }
 
-    estado.totalPaginas = res.data.totalPaginas;
-    
-    listaVagas.innerHTML = res.data.itens.map(vaga => `
+    estado.totalPaginas = res.data?.totalPaginas || 1;
+
+    listaVagas.innerHTML = itens.map(vaga => `
       <div class="card vaga-card">
         <div class="vaga-card-header">
           <h3 class="vaga-titulo">${vaga.titulo}</h3>
           <span class="vaga-empresa">${vaga.empresa_nome}</span>
         </div>
         <div class="vaga-card-body">
-          <p class="vaga-info">📍 ${vaga.cidade_nome} - ${vaga.cidade_uf} | 🏢 ${vaga.tipo_trabalho}</p>
-          <p class="vaga-info">💰 ${vaga.salario ? 'R$ ' + vaga.salario : 'A combinar'}</p>
+          <p class="vaga-info">${vaga.cidade_nome} - ${vaga.cidade_uf} | ${vaga.tipo_trabalho}</p>
+          <p class="vaga-info">${vaga.salario ? 'R$ ' + vaga.salario : 'A combinar'}</p>
         </div>
         <div class="vaga-card-footer">
           <a href="/vaga-detalhes.html?id=${vaga.id}" class="btn-principal" style="width: 100%; text-align: center;">Ver Detalhes</a>
@@ -117,50 +143,63 @@ async function carregarVagas() {
 
     renderizarPaginacao();
   } catch (error) {
-    listaVagas.innerHTML = `<p class="texto-perigo">Ocorreu um erro ao buscar as vagas.</p>`;
+    listaVagas.innerHTML = `<p class="texto-perigo" style="text-align: center;">Ocorreu um erro ao buscar as vagas.</p>`;
   }
 }
 
 // ==========================================
-// EVENTOS E PAGINAÇÃO
+// EVENTOS E FILTRAGEM
 // ==========================================
 function vincularEventosFiltros() {
-  // Atraso de 500ms na digitação para não travar o banco
   const delayFiltro = () => {
     clearTimeout(timeoutFiltro);
     timeoutFiltro = setTimeout(() => {
-      estado.page = 1; // Ao filtrar, volta para a aba 1
-      estado.busca = inputBusca.value.trim();
-      estado.empresa = inputEmpresa.value.trim();
-      estado.salario = inputSalario.value.trim();
+      estado.page = 1;
+      estado.busca = inputBusca ? inputBusca.value.trim() : "";
+      estado.empresa = inputEmpresa ? inputEmpresa.value.trim() : "";
+      estado.salario = inputSalario ? inputSalario.value.trim() : "";
       carregarVagas();
     }, 500);
   };
 
-  inputBusca.addEventListener("input", delayFiltro);
-  inputEmpresa.addEventListener("input", delayFiltro);
-  inputSalario.addEventListener("input", delayFiltro);
+  if (inputBusca) inputBusca.addEventListener("input", delayFiltro);
+  if (inputEmpresa) inputEmpresa.addEventListener("input", delayFiltro);
+  if (inputSalario) inputSalario.addEventListener("input", delayFiltro);
 
-  // Selects disparam instantaneamente no "change"
   const aplicarFiltroSelect = () => {
     estado.page = 1;
-    estado.categoria_id = selectCategoria.value;
-    estado.cidade_id = selectCidade.value;
-    estado.tipo_trabalho = selectTipo.value;
+    estado.categoria_id = selectCategoria ? selectCategoria.value : "";
+    estado.cidade_id = selectCidade ? selectCidade.value : "";
+    estado.tipo_trabalho = selectTipo ? selectTipo.value : "";
     carregarVagas();
   };
 
-  selectCategoria.addEventListener("change", aplicarFiltroSelect);
-  selectCidade.addEventListener("change", aplicarFiltroSelect);
-  selectTipo.addEventListener("change", aplicarFiltroSelect);
+  if (selectCategoria) selectCategoria.addEventListener("change", aplicarFiltroSelect);
+  if (selectCidade) selectCidade.addEventListener("change", aplicarFiltroSelect);
+  if (selectTipo) selectTipo.addEventListener("change", aplicarFiltroSelect);
 
-  // Limpar Filtros
-  btnLimpar.addEventListener("click", () => {
-    inputBusca.value = ""; inputEmpresa.value = ""; inputSalario.value = "";
-    selectCategoria.value = ""; selectCidade.value = ""; selectTipo.value = "";
-    estado = { page: 1, limit: 20, busca: "", empresa: "", salario: "", categoria_id: "", cidade_id: "", tipo_trabalho: "", totalPaginas: 1 };
-    carregarVagas();
-  });
+  if (btnLimpar) {
+    btnLimpar.addEventListener("click", () => {
+      if (inputBusca) inputBusca.value = "";
+      if (inputEmpresa) inputEmpresa.value = "";
+      if (inputSalario) inputSalario.value = "";
+      if (selectCategoria) selectCategoria.value = "";
+      if (selectCidade) selectCidade.value = "";
+      if (selectTipo) selectTipo.value = "";
+      estado = {
+        page: 1,
+        limit: 20,
+        busca: "",
+        empresa: "",
+        salario: "",
+        categoria_id: "",
+        cidade_id: "",
+        tipo_trabalho: "",
+        totalPaginas: 1
+      };
+      carregarVagas();
+    });
+  }
 }
 
 function renderizarPaginacao() {
@@ -186,14 +225,13 @@ function renderizarPaginacao() {
 
   containerPaginacao.innerHTML = html;
 
-  // Eventos de clique nas abas numéricas
   document.querySelectorAll("#container-paginacao .btn-page").forEach(btn => {
     btn.addEventListener("click", (e) => {
       const novaPagina = parseInt(e.currentTarget.dataset.page);
       if (!novaPagina || novaPagina < 1 || novaPagina > estado.totalPaginas || novaPagina === estado.page) return;
       estado.page = novaPagina;
       carregarVagas();
-      window.scrollTo({ top: 0, behavior: 'smooth' }); // Rola pro topo suavemente ao trocar de página
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
 }

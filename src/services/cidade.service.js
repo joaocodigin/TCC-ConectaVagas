@@ -3,7 +3,16 @@ import { CidadeRepository } from "../repositories/cidade.repository.js";
 export class CidadeService {
 static async listar(termo = "", page = 1, limit = 15) {
     const result = await CidadeRepository.listarTodas(termo, page, limit);
-    return { itens: result.cidades, total: result.total, paginaAtual: page, totalPaginas: Math.ceil(result.total / limit) };
+
+    const lista = Array.isArray(result) ? result : (result?.cidades || result?.itens || []);
+    const total = result?.total !== undefined ? result.total : lista.length;
+
+    return {
+      itens: lista,
+      total: total,
+      paginaAtual: page,
+      totalPaginas: Math.ceil(total / limit) || 1
+    };
   }
 
   static async criar(nome, uf) {
