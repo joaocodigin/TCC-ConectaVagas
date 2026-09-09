@@ -3,36 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minhas Vagas - Conecta Vagas</title>
+  <title>Minhas Candidaturas - Conecta Vagas</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
 
-  <!-- CABEÇALHO -->
+  <!-- CABECALHO -->
   <header>
     <div class="logo">
-     <h1><a href="index.html">Conecta Vagas</a></h1>
+      <h1><a href="/">Conecta Vagas</a></h1>
     </div>
 
     <!-- CONTRATO JS: ID nav-usuario preservado -->
     <div class="acoes" id="nav-usuario">
-      <!-- CONTRATO JS: ID btn-logout preservado -->
       <a href="#" id="btn-logout" class="btn-perigo">Sair</a>
     </div>
   </header>
 
-  <!-- CONTEÚDO PRINCIPAL -->
+  <!-- CONTEUDO PRINCIPAL -->
   <main class="container">
     
-    <!-- Cabeçalho da página do painel -->
-    <div class="painel-empresa-header">
-      <div class="painel-empresa-titulo">
-        <h2>Gerenciamento de Vagas</h2>
-        <p>Painel da Empresa - Acompanhe suas vagas publicadas e gerencie as candidaturas.</p>
+    <div class="painel-candidato-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1rem;">
+      <div class="painel-candidato-titulo">
+        <h2 style="margin: 0 0 0.5rem 0;">Minhas Candidaturas</h2>
+        <p class="texto-mutado" style="margin: 0;">Painel do Candidato - Acompanhe suas inscricoes e o status dos processos seletivos.</p>
       </div>
-      <div class="painel-empresa-acoes">
-        <!-- Botão auxiliar de atalho -->
-        <a href="/criar-vaga.html" class="btn-principal">Anunciar Nova Vaga</a>
+      <div class="painel-candidato-acoes">
+        <a href="/vagas.html" class="btn-principal">Explorar Novas Vagas</a>
       </div>
     </div>
 
@@ -40,25 +37,33 @@
     <div id="mensagem-erro" class="alert alert-danger" style="display: none;"></div>
     <div id="mensagem-sucesso" class="alert alert-success" style="display: none;"></div>
 
-    <!-- CONTRATO JS: ID lista-minhas-vagas preservado -->
-    <!-- Utilizando classe semântica para layout flex-column -->
-    <div id="lista-minhas-vagas" class="lista-minhas-vagas-container">
-      
-      <!-- Estado vazio/loading inicial -->
-      <div class="card painel-loading">
-        <p>Carregando suas vagas...</p>
+    <!-- CONTRATO JS: ID lista-candidaturas preservado -->
+    <div id="lista-candidaturas" class="lista-minhas-vagas-container">
+      <div class="card painel-loading" style="padding: 2rem; text-align: center;">
+        <p class="texto-mutado">Carregando suas candidaturas...</p>
       </div>
-
     </div>
     
   </main>
 
-  <!-- RODAPÉ -->
+  <!-- RODAPE -->
   <footer>
     <p>© 2026 Conecta Vagas. Todos os direitos reservados.</p>
   </footer>
 
+  <!-- MODAL DE LOGOUT -->
+  <div id="modal-logout" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <h3>Confirmar Saida</h3>
+      <p>Deseja realmente encerrar sua sessao e sair da conta?</p>
+      <div class="modal-actions">
+        <button type="button" id="btn-cancelar-logout" class="btn-secundario">Cancelar</button>
+        <button type="button" id="btn-confirmar-logout" class="btn-perigo">Sim, Sair</button>
+      </div>
+    </div>
+  </div>
+
   <!-- SCRIPT -->
-  <script type="module" src="/js/pages/minhas-vagas.js"></script>
+  <script type="module" src="/js/pages/minhas-candidaturas.js"></script>
 </body>
 </html>

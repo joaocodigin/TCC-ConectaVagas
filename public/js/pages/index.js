@@ -7,11 +7,19 @@ const modalLogout = document.getElementById("modal-logout");
 const btnCancelarLogout = document.getElementById("btn-cancelar-logout");
 const btnConfirmarLogout = document.getElementById("btn-confirmar-logout");
 
+function extrairArray(resposta) {
+  if (!resposta) return [];
+  if (Array.isArray(resposta)) return resposta;
+  if (Array.isArray(resposta.data)) return resposta.data;
+  if (Array.isArray(resposta.data?.itens)) return resposta.data.itens;
+  if (Array.isArray(resposta.data?.vagas)) return resposta.data.vagas;
+  if (Array.isArray(resposta.itens)) return resposta.itens;
+  return [];
+}
+
 async function verificarEstadoLogin() {
   try {
     const resposta = await buscarPerfilAtual();
-
-    // Extrai o usuario com fallback flexivel para a estrutura do data
     const usuario = resposta?.data?.usuario || resposta?.data;
 
     if (resposta && resposta.success && usuario && (usuario.id || usuario.role)) {
@@ -33,19 +41,18 @@ function renderizarNavAutenticado(usuario) {
     linksExclusivos = `<a href="/minhas-candidaturas.html">Minhas Candidaturas</a>`;
   } else if (usuario.role === "empresa") {
     linksExclusivos = `
-      <a href="../minhas-vagas.html">Minhas Vagas</a>
-      <a href="../criar-vaga.html">Cadastrar Vaga</a>
+      <a href="/minhas-vagas.html">Minhas Vagas</a>
+      <a href="/criar-vaga.html">Cadastrar Vaga</a>
     `;
   } else if (usuario.role === "admin") {
     linksExclusivos = `<a href="/admin.html">Painel Admin</a>`;
   }
 
-  // ATUALIZAÇÃO VISUAL: Aplicadas as variáveis de cor e o botão padronizado (.btn-perigo)
   navUsuario.innerHTML = `
     <a href="/vagas.html">Vagas</a>
     ${linksExclusivos}
     <span style="margin: 0 1rem; color: var(--color-text-muted); font-size: 0.95rem;">
-      Olá, <strong style="color: var(--color-primary);">${usuario.nome || "Usuário"}</strong>
+      Ola, <strong style="color: var(--color-primary);">${usuario.nome || "Usuario"}</strong>
     </span>
     <button type="button" id="btn-sair" class="btn-perigo" style="padding: 8px 16px; font-size: 0.85rem;">Sair</button>
   `;
@@ -58,7 +65,6 @@ function renderizarNavAutenticado(usuario) {
 
 function renderizarNavVisitante() {
   if (!navUsuario) return;
-  // ATUALIZAÇÃO VISUAL: Aplicada a classe .btn-principal no cadastro
   navUsuario.innerHTML = `
     <a href="/">Vagas</a>
     <a href="/login.html">Login</a>
@@ -111,32 +117,37 @@ async function carregarVagas() {
   if (!listaVagas) return;
 
   try {
-    const resposta = await listarVagas();
-    const vagas = Array.isArray(resposta?.data) ? resposta.data : [];
-    const ultimasVagas = vagas.slice(-6).reverse();
+    const resposta = await listarVagas({ limit: 6, page: 1 });
+    const todasVagas = extrairArray(resposta);
+
+    const vagasAtivas = todasVagas.filter(vaga => {
+      const status = String(vaga.status || "ativa").trim().toLowerCase();
+      return status === "ativa" || status === "aberta";
+    });
+
+    const ultimasVagas = vagasAtivas.slice(0, 6);
 
     if (!resposta?.success || ultimasVagas.length === 0) {
-      listaVagas.innerHTML = `<div class="card" style="grid-column: 1 / -1; text-align: center;"><p style="color: var(--color-text-muted);">Nenhuma vaga disponível no momento.</p></div>`;
+      listaVagas.innerHTML = `
+        <div class="card" style="grid-column: 1 / -1; text-align: center;">
+          <p style="color: var(--color-text-muted);">Nenhuma vaga disponivel no momento.</p>
+        </div>`;
       return;
     }
 
-    // ATUALIZAÇÃO VISUAL: Layout atualizado para o padrão .vaga-card (removido o margin-bottom inline que quebrava o carrossel)
     listaVagas.innerHTML = ultimasVagas.map(vaga => `
       <article class="card vaga-card">
         <h3 class="vaga-card__titulo">${vaga.titulo}</h3>
         
         <div class="vaga-card__info">
-          <span style="font-size: 1.1rem;"></span> 
           <span>${vaga.empresa_nome || "Confidencial"}</span>
         </div>
         
         <div class="vaga-card__info">
-          <span style="font-size: 1.1rem;"></span> 
-          <span>${vaga.cidade_nome || "Não informada"}</span>
+          <span>${vaga.cidade_nome ? `${vaga.cidade_nome} - ${vaga.cidade_uf || ""}` : "Nao informada"}</span>
         </div>
         
         <div class="vaga-card__info">
-          <span style="font-size: 1.1rem;"></span> 
           <span style="font-weight: 600; color: var(--color-text);">${vaga.salario ? `R$ ${Number(vaga.salario).toFixed(2)}` : "A combinar"}</span>
         </div>
         
@@ -147,7 +158,10 @@ async function carregarVagas() {
     `).join("");
 
   } catch (error) {
-    listaVagas.innerHTML = `<div class="card" style="grid-column: 1 / -1; text-align: center;"><p style="color: var(--color-danger);">Erro ao carregar a lista de vagas.</p></div>`;
+    listaVagas.innerHTML = `
+      <div class="card" style="grid-column: 1 / -1; text-align: center;">
+        <p style="color: var(--color-danger);">Erro ao carregar a lista de vagas.</p>
+      </div>`;
   }
 }
 
