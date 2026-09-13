@@ -13,7 +13,6 @@ const listaCandidaturas = document.getElementById("lista-candidaturas");
 const mensagemErro = document.getElementById("mensagem-erro");
 const mensagemSucesso = document.getElementById("mensagem-sucesso");
 
-// Extrator seguro para evitar falhas com diferentes formatos de resposta da API
 function extrairArray(resposta) {
   if (!resposta) return [];
   if (Array.isArray(resposta)) return resposta;
@@ -35,7 +34,7 @@ async function verificarAcesso() {
     const role = String(usuario?.role || "").trim().toLowerCase();
 
     if (!resposta?.success || !usuario || (role !== "candidato" && role !== "admin")) {
-      window.location.href = "/";
+      window.location.href = "/login.html";
       return false;
     }
 
@@ -143,12 +142,15 @@ async function carregarCandidaturas() {
     }
 
     listaCandidaturas.innerHTML = candidaturas.map((candidatura) => {
-      const statusLower = String(candidatura.status || "pendente").trim().toLowerCase();
-      
+      const statusCandidatura = String(candidatura.status || "pendente").trim().toLowerCase();
+      const statusVaga = String(candidatura.vaga_status || "ativa").trim().toLowerCase();
+      const vagaEncerrada = statusVaga === "encerrada";
+
+      // Cor do status da candidatura
       let statusCor = "var(--color-text-muted)";
-      if (statusLower === "aceito") {
+      if (statusCandidatura === "aceito") {
         statusCor = "var(--color-success, #16a34a)";
-      } else if (statusLower === "recusado") {
+      } else if (statusCandidatura === "recusado") {
         statusCor = "var(--color-danger, #dc2626)";
       }
 
@@ -164,18 +166,26 @@ async function carregarCandidaturas() {
         ? `${candidatura.cidade_nome}${candidatura.cidade_uf ? ` - ${candidatura.cidade_uf}` : ""}`
         : "Nao informada";
 
+      // Badge que avisa sobre a vaga encerrada (somente renderizada se encerrada)
+      const badgeVagaEncerrada = vagaEncerrada
+        ? `<span style="background-color: #fee2e2; color: #dc2626; border: 1px solid #fecaca; font-size: 0.75rem; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; margin-left: 8px;">Vaga Encerrada</span>`
+        : "";
+
       return `
-        <article class="card" style="margin-bottom: 1.5rem; padding: 1.5rem;">
+        <article class="card" style="margin-bottom: 1.5rem; padding: 1.5rem; opacity: ${vagaEncerrada ? '0.85' : '1'};">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 1rem; flex-wrap: wrap;">
             <div>
-              <h3 style="margin: 0 0 0.5rem 0;">${titulo}</h3>
+              <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 4px; margin-bottom: 0.5rem;">
+                <h3 style="margin: 0;">${titulo}</h3>
+                ${badgeVagaEncerrada}
+              </div>
               <p style="margin: 0.25rem 0;"><strong>Empresa:</strong> ${empresa}</p>
               <p style="margin: 0.25rem 0;"><strong>Cidade:</strong> ${cidade}</p>
               <p style="margin: 0.25rem 0;"><strong>Salario:</strong> ${salarioTexto}</p>
             </div>
             <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem;">
               <span style="text-transform: uppercase; font-weight: 700; font-size: 0.85rem; color: ${statusCor}; border: 1px solid var(--color-border); padding: 4px 10px; border-radius: 4px; display: inline-block;">
-                ${statusLower}
+                Status: ${statusCandidatura}
               </span>
               <a href="/vaga-detalhes.html?id=${vagaId}" class="btn-secundario" style="font-size: 0.85rem; padding: 6px 12px;">Ver Detalhes da Vaga</a>
             </div>

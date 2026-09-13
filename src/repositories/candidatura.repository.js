@@ -36,6 +36,7 @@ static async listarPorCandidato(candidatoId) {
     return db.all(
       `SELECT c.id as candidatura_id, c.id, c.status, c.criado_em,
               v.id as vaga_id, v.titulo as vaga_titulo, v.tipo_trabalho,
+              v.status as vaga_status, 
               COALESCE(e.nome_fantasia, u_empresa.nome, 'Confidencial') as empresa_nome,
               cid.nome as cidade_nome, cid.uf as cidade_uf
        FROM candidaturas c
