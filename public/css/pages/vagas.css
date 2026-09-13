@@ -63,6 +63,8 @@
   border-top: 1px solid var(--color-border);
 }
 
+
+
 /* Responsividade para Celulares */
 @media (max-width: 768px) {
   .vagas-filters-grid {

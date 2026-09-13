@@ -58,7 +58,9 @@ function renderizarNavAutenticado(usuario) {
   let linksExclusivos = "";
 
   if (usuario.role === "candidato") {
-    linksExclusivos = `<a href="/minhas-candidaturas.html">Minhas Candidaturas</a>`;
+    linksExclusivos = `
+    <a href="/vagas.html" class="nav-link-active"> Vagas</a>
+    <a href="/minhas-candidaturas.html" ">Minhas Candidaturas</a>`;
   } else if (usuario.role === "empresa") {
     linksExclusivos = `
       <a href="../minhas-vagas.html">Minhas Vagas</a>
@@ -86,7 +88,7 @@ function renderizarNavAutenticado(usuario) {
 function renderizarNavVisitante() {
   if (!navUsuario) return;
   navUsuario.innerHTML = `
-    <a href="/">Vagas</a>
+    <a href="/vagas.html""class="nav-link-active"> Vagas</a>
     <a href="/login.html">Login</a>
     <a href="/cadastro.html" class="btn-principal">Cadastrar-se</a>
   `;

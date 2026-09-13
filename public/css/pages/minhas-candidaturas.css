@@ -3,10 +3,7 @@
 ========================================== */
 
 /* Link Ativo na Navegação (Pode ser reaproveitado em outros painéis) */
-.nav-link-active {
-  color: var(--color-primary) !important;
-  font-weight: 600;
-}
+
 
 /* Cabeçalho do Painel */
 .painel-header {

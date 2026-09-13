@@ -66,7 +66,7 @@ function renderizarNavAutenticado(usuario) {
 function renderizarNavVisitante() {
   if (!navUsuario) return;
   navUsuario.innerHTML = `
-    <a href="/">Vagas</a>
+    <a href="/vagas.html">Vagas</a>
     <a href="/login.html">Login</a>
     <a href="/cadastro.html" class="btn-principal">Cadastrar-se</a>
   `;
