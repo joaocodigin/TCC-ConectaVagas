@@ -18,15 +18,12 @@ export class CandidaturaRepository {
     );
   }
 
-  static async buscarPorId(id) {
+static async buscarPorId(id) {
     const db = await getDatabaseConnection();
     return db.get(
       `SELECT c.*, v.empresa_id 
        FROM candidaturas c
-       INNER JOIN vagas v ON v.id = c.vaga_id
-       /* Trava: O candidato E a empresa precisam estar ativos para visualizar */
-       INNER JOIN usuarios u_candidato ON u_candidato.id = c.candidato_id AND u_candidato.ativo = 1
-       INNER JOIN usuarios u_empresa ON u_empresa.id = v.empresa_id AND u_empresa.ativo = 1
+       LEFT JOIN vagas v ON v.id = c.vaga_id
        WHERE c.id = ?`,
       [Number(id)]
     );

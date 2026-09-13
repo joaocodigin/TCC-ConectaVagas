@@ -24,7 +24,7 @@ export class VagaController {
 
   static async listarPublicas(req, res) {
     try {
-      // Captura todos os filtros avançados e parâmetros de paginação da URL
+      // Captura todos os filtros avancados e parametros de paginacao da URL
       const { busca, categoria_id, cidade_id, tipo_trabalho, empresa, salario, page, limit } = req.query;
       
       const metodoBusca = VagaService.listarPublicas || VagaService.listarVagasPublicas || VagaService.listarComFiltros;
@@ -123,6 +123,32 @@ export class VagaController {
         : null;
 
       return sendSuccess(res, vagaEncerrada, 200);
+    } catch (error) {
+      return sendError(res, error.message, 400);
+    }
+  }
+
+  // ==========================================
+  // NOVO METODO: EXCLUIR VAGA
+  // ==========================================
+  static async excluir(req, res) {
+    try {
+      if (!req.session || !req.session.usuario) {
+        return sendError(res, "Usuario nao autenticado.", 401);
+      }
+      
+      const usuarioId = Number(req.session.usuario.id || req.session.usuario.usuario_id);
+      const { id } = req.params;
+
+      const metodoExcluir = VagaService.excluir || VagaService.excluirVaga || VagaService.deletar;
+
+      if (typeof metodoExcluir !== "function") {
+        return sendError(res, "Metodo de exclusao nao implementado no VagaService.", 500);
+      }
+
+      await metodoExcluir.call(VagaService, usuarioId, Number(id));
+
+      return sendSuccess(res, { message: "Vaga excluida com sucesso." }, 200);
     } catch (error) {
       return sendError(res, error.message, 400);
     }

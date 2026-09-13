@@ -185,7 +185,7 @@ async function carregarCandidaturas() {
             </div>
             <div style="text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 0.75rem;">
               <span style="text-transform: uppercase; font-weight: 700; font-size: 0.85rem; color: ${statusCor}; border: 1px solid var(--color-border); padding: 4px 10px; border-radius: 4px; display: inline-block;">
-                Status: ${statusCandidatura}
+                ${statusCandidatura}
               </span>
               <a href="/vaga-detalhes.html?id=${vagaId}" class="btn-secundario" style="font-size: 0.85rem; padding: 6px 12px;">Ver Detalhes da Vaga</a>
             </div>

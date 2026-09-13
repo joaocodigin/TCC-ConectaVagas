@@ -14,6 +14,7 @@ export async function listarVagas(filtros = {}) {
   const queryString = query.toString() ? `?${query.toString()}` : "";
   return await apiRequest(`/api/vagas${queryString}`, "GET");
 }
+
 export async function criarVaga(dadosVaga) {
   return await apiRequest("/api/vagas", "POST", dadosVaga);
 }
@@ -33,6 +34,7 @@ export async function listarCidades(termo = "", page = 1) {
   const queryString = query.toString() ? `?${query.toString()}` : "";
   return await apiRequest(`/api/cidades${queryString}`, "GET");
 }
+
 export async function buscarVagaPorId(id) {
   return await apiRequest(`/api/vagas/${id}`, "GET");
 }
@@ -47,4 +49,16 @@ export async function encerrarVaga(id) {
 
 export async function alterarStatusVaga(id, status) {
   return await apiRequest(`/api/vagas/${id}`, "PUT", { status });
+}
+
+// ==========================================
+// NOVAS FUNCOES: EXCLUIR E EDITAR
+// ==========================================
+
+export async function excluirVaga(id) {
+  return await apiRequest(`/api/vagas/${id}`, "DELETE");
+}
+
+export async function atualizarVaga(id, dadosVaga) {
+  return await apiRequest(`/api/vagas/${id}`, "PUT", dadosVaga);
 }

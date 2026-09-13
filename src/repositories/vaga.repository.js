@@ -128,9 +128,25 @@ export class VagaRepository {
     return VagaRepository.buscarPorId(id);
   }
 
+  // ==========================================
+  // NOVO METODO: EXCLUIR VAGA E SUAS CANDIDATURAS
+  // ==========================================
+  static async excluir(id) {
+    const db = await getDatabaseConnection();
+    
+    // 1º Passo: Limpar todas as candidaturas vinculadas a esta vaga para evitar erros no banco
+    await db.run(`DELETE FROM candidaturas WHERE vaga_id = ?`, [Number(id)]);
+    
+    // 2º Passo: Excluir definitivamente a vaga
+    await db.run(`DELETE FROM vagas WHERE id = ?`, [Number(id)]);
+    
+    return true;
+  }
+
   async criar(dados) { return VagaRepository.criar(dados); }
   async buscarPorId(id) { return VagaRepository.buscarPorId(id); }
   async listarComFiltros(filtros) { return VagaRepository.listarComFiltros(filtros); }
   async listarPorEmpresaId(emp, usu) { return VagaRepository.listarPorEmpresaId(emp, usu); }
   async atualizar(id, dados) { return VagaRepository.atualizar(id, dados); }
+  async excluir(id) { return VagaRepository.excluir(id); }
 }

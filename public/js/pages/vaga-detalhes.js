@@ -16,7 +16,7 @@ if (btnVoltar) {
     e.preventDefault();
    
     if (document.referrer && document.referrer.includes(window.location.host)) {
-      window.history.back(); //
+      window.history.back(); 
     } else {
       window.location.href = "/"; 
     }

@@ -20,4 +20,7 @@ router.put("/:id", requireAuth, requireRole(ROLES.EMPRESA), VagaController.atual
 // 4. Rota de encerramento da vaga (Atende a chamada do frontend)
 router.patch("/:id/encerrar", requireAuth, requireRole(ROLES.EMPRESA), VagaController.atualizar);
 
+// 5. Rota para excluir a vaga definitivamente
+router.delete("/:id", requireAuth, requireRole(ROLES.EMPRESA), VagaController.excluir);
+
 export default router;

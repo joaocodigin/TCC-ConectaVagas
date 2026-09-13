@@ -103,7 +103,7 @@ export class VagaService {
     return await buscarVaga(vagaId);
   }
 
-static async listarVagasPublicas(filtros = {}) {
+  static async listarVagasPublicas(filtros = {}) {
     const listarMetodo = VagaRepository.listarComFiltros 
       ? VagaRepository.listarComFiltros 
       : (vagaRepo.listarComFiltros ? vagaRepo.listarComFiltros.bind(vagaRepo) : null);
@@ -124,7 +124,6 @@ static async listarVagasPublicas(filtros = {}) {
       limit
     });
 
-    // Como o repositório agora retorna { vagas, total }, extraímos corretamente
     const vagas = result.vagas || result;
     const total = result.total !== undefined ? result.total : vagas.length;
 
@@ -135,6 +134,7 @@ static async listarVagasPublicas(filtros = {}) {
       totalPaginas: Math.ceil(total / limit)
     };
   }
+  
   static async buscarPorId(id) {
     const vaga = await buscarVaga(id);
     if (!vaga) {
@@ -168,6 +168,13 @@ static async listarVagasPublicas(filtros = {}) {
       throw new Error("Acesso negado: Voce nao tem permissao para alterar esta vaga.");
     }
 
+    // REGRA DE SEGURANÇA: Se estiver enviando dados estruturais (título, descrição, etc.), 
+    // a vaga obrigatoriamente precisa estar encerrada.
+    const editandoDados = dados.titulo || dados.descricao || dados.salario || dados.requisitos;
+    if (editandoDados && String(vagaExistente.status).toLowerCase() !== "encerrada") {
+      throw new Error("Para editar as informacoes, voce precisa encerrar a vaga primeiro.");
+    }
+
     const { titulo, descricao, requisitos, salario, tipo_trabalho, cidade_id, categoria_id, status } = dados;
 
     let statusAtualizar = vagaExistente.status;
@@ -189,5 +196,39 @@ static async listarVagasPublicas(filtros = {}) {
       categoria_id: categoria_id || vagaExistente.categoria_id,
       status: statusAtualizar
     });
+  }
+
+  // ==========================================
+  // EXCLUIR VAGA
+  // ==========================================
+  static async excluirVaga(usuarioId, vagaId) {
+    const { empresaId, usuarioId: uId } = await obterIdentificadoresEmpresa(usuarioId);
+
+    const vagaExistente = await buscarVaga(vagaId);
+    if (!vagaExistente) {
+      throw new Error("Vaga nao encontrada.");
+    }
+
+    const pertenceAEmpresa = Number(vagaExistente.empresa_id) === Number(empresaId) || 
+                             Number(vagaExistente.empresa_id) === Number(uId);
+
+    if (!pertenceAEmpresa) {
+      throw new Error("Acesso negado: Voce nao tem permissao para excluir esta vaga.");
+    }
+
+    // REGRA DE SEGURANÇA: Só exclui se a vaga estiver encerrada
+    if (String(vagaExistente.status).toLowerCase() !== "encerrada") {
+      throw new Error("A vaga precisa estar encerrada para ser excluida.");
+    }
+
+    const excluirMetodo = VagaRepository.excluir 
+      ? VagaRepository.excluir 
+      : vagaRepo.excluir?.bind(vagaRepo);
+
+    if (!excluirMetodo) {
+      throw new Error("Metodo de exclusao nao configurado no Banco de Dados.");
+    }
+
+    return await excluirMetodo(vagaId);
   }
 }

@@ -63,6 +63,7 @@ function renderizarNavAutenticado(usuario) {
     <a href="/minhas-candidaturas.html" ">Minhas Candidaturas</a>`;
   } else if (usuario.role === "empresa") {
     linksExclusivos = `
+      <a href="../vagas.html" class="nav-link-active"> Vagas</a>
       <a href="../minhas-vagas.html">Minhas Vagas</a>
       <a href="../criar-vaga.html">Cadastrar Vaga</a>
     `;

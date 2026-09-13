@@ -59,6 +59,7 @@ function renderizarNavAutenticado(usuario) {
   navUsuario.innerHTML = `
     <a href="/vagas.html">Vagas</a>
     <a href="/minhas-vagas.html">Minhas Vagas</a>
+     <a href="/criar-vaga.html" class = "nav-link-active">Cadastrar Vaga</a>
     <span style="margin: 0 1rem; color: var(--color-text-muted); font-size: 0.95rem;">
       Ola, <strong style="color: var(--color-primary);">${primeiroNome}</strong>
     </span>
