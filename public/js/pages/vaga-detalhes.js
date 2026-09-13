@@ -9,6 +9,20 @@ const mensagemSucesso = document.getElementById("mensagem-sucesso");
 
 let usuarioAtual = null;
 
+const btnVoltar = document.getElementById("btn-voltar");
+
+if (btnVoltar) {
+  btnVoltar.addEventListener("click", (e) => {
+    e.preventDefault();
+   
+    if (document.referrer && document.referrer.includes(window.location.host)) {
+      window.history.back(); //
+    } else {
+      window.location.href = "/"; 
+    }
+  });
+}
+
 async function inicializarHeader() {
   try {
     const perfilRes = await buscarPerfilAtual();
