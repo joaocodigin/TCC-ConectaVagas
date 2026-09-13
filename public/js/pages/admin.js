@@ -2,6 +2,11 @@ import { buscarPerfilAtual, logout } from "../api/auth.api.js";
 import { listarTodosUsuarios, alternarStatusUsuario, editarUsuario, excluirUsuario, criarCategoria, atualizarCategoria, excluirCategoria, criarCidade, atualizarCidade, excluirCidade } from "../api/admin.api.js";
 import { listarCategorias, listarCidades } from "../api/vagas.api.js";
 
+// ELEMENTOS DE SESSAO
+const navUsuario = document.getElementById("nav-usuario");
+const btnLogout = document.getElementById("btn-logout");
+
+// ELEMENTOS DA PÁGINA
 const containerUsuarios = document.getElementById("container-usuarios");
 const listaCategorias = document.getElementById("lista-categorias");
 const listaCidades = document.getElementById("lista-cidades");
@@ -13,7 +18,6 @@ const formCriarCategoria = document.getElementById("form-criar-categoria");
 const formCriarCidade = document.getElementById("form-criar-cidade");
 const mensagemErro = document.getElementById("mensagem-erro");
 const mensagemSucesso = document.getElementById("mensagem-sucesso");
-const btnLogout = document.getElementById("btn-logout");
 
 // ESTADO GLOBAL DAS 3 TABELAS
 let estadoUsuarios = { pagina: 1, termo: "", totalPaginas: 1 };
@@ -83,6 +87,9 @@ function construirPaginacao(paginaAtual, totalPaginas, tipo) {
   return html;
 }
 
+// ==========================================
+// CONTROLE DE SESSÃO E RENDERIZAÇÃO DO MENU
+// ==========================================
 async function verificarAcessoAdmin() {
   try {
     const perfilRes = await buscarPerfilAtual();
@@ -91,8 +98,37 @@ async function verificarAcessoAdmin() {
       window.location.href = "/";
       return false;
     }
+
+    renderizarNavAutenticado(usuario); // Renderiza o menu do topo
     return true;
-  } catch (error) { window.location.href = "/login.html"; return false; }
+  } catch (error) { 
+    window.location.href = "/login.html"; 
+    return false; 
+  }
+}
+
+function renderizarNavAutenticado(usuario) {
+  if (!navUsuario) return;
+
+  const primeiroNome = String(usuario.nome || "Admin").trim().split(" ")[0];
+
+  navUsuario.innerHTML = `
+    <a href="/vagas.html">Vagas</a>
+    <a href="/admin.html" class="nav-link-active">Painel Admin</a>
+    <span style="margin: 0 1rem; color: var(--color-text-muted); font-size: 0.95rem;">
+      Olá, <strong style="color: var(--color-primary);">${primeiroNome}</strong>
+    </span>
+    <button type="button" id="btn-sair" class="btn-perigo" style="padding: 8px 16px; font-size: 0.85rem;">Sair</button>
+  `;
+
+  const btnSair = document.getElementById("btn-sair");
+  if (btnSair) {
+    btnSair.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await logout();
+      window.location.href = "/login.html";
+    });
+  }
 }
 
 // ==========================================

@@ -68,7 +68,10 @@ function renderizarNavAutenticado(usuario) {
       <a href="../criar-vaga.html">Cadastrar Vaga</a>
     `;
   } else if (usuario.role === "admin") {
-    linksExclusivos = `<a href="/admin.html">Painel Admin</a>`;
+    linksExclusivos = `
+    <a href="../vagas.html" class="nav-link-active"> Vagas</a>
+    <a href="/admin.html">Painel Admin</a>
+    `;
   }
 
   navUsuario.innerHTML = `
